@@ -11,8 +11,7 @@
 							:x="x"
 							:y="y"
 							:cell="cell"
-							:size="getSize"
-                            />
+							:size="getSize" />
 					</template>
 				</div>
 			</div>
@@ -21,27 +20,27 @@
 </template>
 
 <script>
-    import HeaderBar from './HeaderBar.vue';
-    import Cell from './Cell.vue';
-    import GameManager from '../managers/game_manager.js';
-    
-    export default {
-        components: {
-            headerBar : HeaderBar,
-            gridCell : Cell
-        },
-        data() {
-            GameManager.init();
+  import HeaderBar from './HeaderBar.vue';
+  import Cell from './Cell.vue';
+  import GameManager from '../managers/game_manager.js';
+   
+  export default {
+    components: {
+      headerBar : HeaderBar,
+      gridCell : Cell
+    },
+    data() {
+      GameManager.init();
 			GameManager.addPawns();
 
-            return {
-                game : GameManager
-            }
-        },
-        methods : {
-            newGame() {
-                console.log('Home: new game button clicked');
-            }
+      return {
+        game : GameManager
+      }
+    },
+    methods : {
+      newGame() {
+        console.log('Home: new game button clicked');
+      }
 		},
 		computed: {
 			getSize(){
