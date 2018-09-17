@@ -2,7 +2,7 @@ module.exports = {
 	"env": {
 		"browser": true,
 		"node"   : true,
-		"amd"    : true
+		"es6"    : true
 	},
 	"globals": {
 		"Constants": false,
@@ -10,7 +10,8 @@ module.exports = {
 	},
 	"parserOptions": {
 		"ecmaVersion": 6,
-		"sourceType": "module"
+		"sourceType": "module",
+		"parser": "babel-eslint"
 	},
 	"extends": [
 		"eslint:recommended",

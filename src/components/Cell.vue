@@ -4,7 +4,9 @@
     :class="getClasses"
     class="cell">
     <template v-if="cell.pawn">
-      <grid-pawn :pawn="cell.pawn"/>
+      <grid-pawn 
+        :pawn="cell.pawn"
+        @pawnSelected="pawnSelected" />
     </template>
   </div>   
 </template>
@@ -18,11 +20,26 @@ export default {
     gridPawn: Pawn
   },
   props: {
-    "cell": Cell, 
-    "size": String, 
-    "x": Number,
-    "y": Number, 
-    "moves": Number
+    "cell": {
+      type : Cell,
+      required : true
+    }, 
+    "size": {
+      type : String,
+      required : true
+    }, 
+    "x": {
+      type : Number,
+      required : true
+    },
+    "y": {
+      type : Number,
+      required : true
+    },
+    "moves": {
+      type : Number,
+      default : 1
+    },
   },
   computed: {
     getClasses() {
@@ -43,7 +60,11 @@ export default {
       return classes;
     }
   },
-  methods: {}
+  methods: {
+    pawnSelected() {
+      this.$emit("pawnSelected", this.pawn, 4);
+    }
+  }
 };
 </script>
 

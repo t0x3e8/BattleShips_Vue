@@ -6,5 +6,6 @@ export default class Pawn {
 		this.type = 'Destroyer'
 		this.x = options.x;
 		this.y = options.y;
+		this.moves = 4;
     }
 }

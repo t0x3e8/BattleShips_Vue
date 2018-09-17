@@ -1,22 +1,23 @@
 <template>
-	<div class="content">
-		<header-bar @newGame="newGame" />
-		<div class="wrapper">
-			<div class="subwrapper">
-				<div class="grid">
-					<template v-for="(row, y) in game.board.grid">
-						<grid-cell
-							v-for="(cell, x) in row"
-							:key="x+'-'+y"
-							:x="x"
-							:y="y"
-							:cell="cell"
-							:size="getSize" />
-					</template>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="content">
+    <header-bar @newGame="newGame" />
+    <div class="wrapper">
+      <div class="subwrapper">
+        <div class="grid">
+          <template v-for="(row, y) in game.board.grid">
+            <grid-cell
+              v-for = "(cell, x) in row"
+              :key = "x + '-' + y"
+              :x = "x"
+              :y = "y"
+              :cell = "cell"
+              :size = "getSize"
+              @pawnSelected = "pawnSelected" />
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -31,51 +32,54 @@
     },
     data() {
       GameManager.init();
-			GameManager.addPawns();
+      GameManager.addPawns();
 
       return {
         game : GameManager
+      }
+		},		
+    computed: {
+      getSize(){
+        return "0 0 " + 100 / this.game.board.numberOfColumns + "%";
       }
     },
     methods : {
       newGame() {
         console.log('Home: new game button clicked');
+      },
+      pawnSelected(pawn, maxMoves) {
+        console.log(pawn + ' ' + maxMoves);
       }
-		},
-		computed: {
-			getSize(){
-				return "0 0 " + 100 / this.game.board.numberOfColumns + "%";
-			}
-		}
     }
+  }
 </script>
 
 <style lang="scss">
-	.content{
-		height: 100vh;
+  .content{
+    height: 100vh;
 
-		.wrapper{
-			display: flex;
-			width: 100%;
-			height: calc(100%);
-			align-items: center;
+    .wrapper{
+      display: flex;
+      width: 100%;
+      height: calc(100%);
+      align-items: center;
 
-			.subwrapper{
-				display: flex;
-				justify-content: center;
+      .subwrapper{
+        display: flex;
+        justify-content: center;
 
-				width: 100%;
-				.grid{
-					display  : flex;
-					flex-wrap: wrap;
+        width: 100%;
+        .grid{
+          display  : flex;
+          flex-wrap: wrap;
 
-					width: 100%;
-					border: 2px solid black;
-					@media (min-width: 1020px){
-						max-width: 750px;
-					}
-				}
-			}
-		}
-	}
+          width: 100%;
+          border: 2px solid black;
+          @media (min-width: 1020px){
+            max-width: 750px;
+          }
+        }
+      }
+    }
+  }
 </style>
