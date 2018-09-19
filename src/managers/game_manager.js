@@ -3,18 +3,18 @@ import Pawn from '../models/pawn'
 import Player from '../models/player'
 
 export default {
-  init(options = {}) {
-    this.board = new Board(options);
-    this.player_one = new Player({id: 'Player1'});
-    this.player_two = new Player({id: 'Player2'});
-  },
+	init(options = {}) {
+		this.board = new Board(options);
+		this.player_one = new Player({ id: 'Player1' });
+		this.player_two = new Player({ id: 'Player2' });
+	},
 
-	addPawns(){
+	addPawns() {
 		const self = this;
 
-		for(let c = 0; c < this.board.numberOfColumns; c++) {
-			this.player_one.addPawn(new Pawn({x: c, y: 0}));
-			this.player_two.addPawn(new Pawn({x: c, y: this.board.numberOfRows - 1}));
+		for (let col = 0; col < this.board.numberOfColumns; col++) {
+			this.player_one.addPawn(new Pawn({ row: 0, column: col }));
+			this.player_two.addPawn(new Pawn({ row: this.board.numberOfRows - 1, column: col }));
 		}
 
 		[this.player_one, this.player_two].forEach((player) => {

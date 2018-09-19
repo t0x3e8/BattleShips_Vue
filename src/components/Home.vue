@@ -4,12 +4,12 @@
     <div class="wrapper">
       <div class="subwrapper">
         <div class="grid">
-          <template v-for="(row, y) in game.board.grid">
+          <template v-for="(row, rowIndex) in game.board.grid">
             <grid-cell
-              v-for = "(cell, x) in row"
-              :key = "x + '-' + y"
-              :x = "x"
-              :y = "y"
+              v-for = "(cell, columnIndex) in row"
+              :key = "columnIndex + '-' + rowIndex"
+              :column = "columnIndex"
+              :row = "rowIndex"
               :cell = "cell"
               :size = "getSize"
               @pawnSelected = "pawnSelected" />
@@ -35,20 +35,28 @@
       GameManager.addPawns();
 
       return {
-        game : GameManager
+        game : GameManager,
+        selectedCell : Cell
       }
 		},		
     computed: {
       getSize(){
+        // todo correct
         return "0 0 " + 100 / this.game.board.numberOfColumns + "%";
       }
     },
     methods : {
       newGame() {
+        // todo remove
         console.log('Home: new game button clicked');
       },
       pawnSelected(pawn, maxMoves) {
-        console.log(pawn + ' ' + maxMoves);
+        this.selectCell(pawn.row, pawn.column);
+
+      },
+      selectCell(row, column) {
+        const board = this.game.board;
+        board.selectCellAt(row, column);
       }
     }
   }

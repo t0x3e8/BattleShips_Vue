@@ -4,8 +4,8 @@ export default class Pawn {
 		options = options || {};
 		this.player_id = options.player_id;
 		this.type = 'Destroyer'
-		this.x = options.x;
-		this.y = options.y;
+		this.column = options.column;
+		this.row = options.row;
 		this.moves = 4;
     }
 }

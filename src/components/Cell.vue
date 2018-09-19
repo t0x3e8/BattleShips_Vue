@@ -2,7 +2,8 @@
   <div 
     :style="{flex: size}"
     :class="getClasses"
-    class="cell">
+    class="cell"
+    @click="pawnSelected">
     <template v-if="cell.pawn">
       <grid-pawn 
         :pawn="cell.pawn"
@@ -28,18 +29,14 @@ export default {
       type : String,
       required : true
     }, 
-    "x": {
+    "column": {
       type : Number,
       required : true
     },
-    "y": {
+    "row": {
       type : Number,
       required : true
-    },
-    "moves": {
-      type : Number,
-      default : 1
-    },
+    }
   },
   computed: {
     getClasses() {
@@ -57,12 +54,17 @@ export default {
       if (this.cell.type === 5) {
         classes.push("color-island");
       }
+      if (this.cell.isSelected) {
+        classes.push("color-selection");
+      }
       return classes;
     }
   },
   methods: {
     pawnSelected() {
-      this.$emit("pawnSelected", this.pawn, 4);
+      if (this.cell.pawn) {
+        this.$emit("pawnSelected", this.cell.pawn, 4);
+      }
     }
   }
 };
@@ -91,6 +93,9 @@ export default {
   }
   &.color-island {
     background-color: #ede064;
+  }
+  &.color-selection { 
+    background-color: red;
   }
 }
 </style>
