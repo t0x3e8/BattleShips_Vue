@@ -12,7 +12,8 @@
               :row = "rowIndex"
               :cell = "cell"
               :size = "getSize"
-              @pawnSelected = "pawnSelected" />
+              @pawnSelected = "pawnSelected"
+              @cellSelected = "cellSelected" />
           </template>
         </div>
       </div>
@@ -50,8 +51,13 @@
         // todo remove
         console.log('Home: new game button clicked');
       },
-      pawnSelected(pawn, maxMoves) {
-        this.selectCell(pawn.row, pawn.column);
+      cellSelected() {
+        const board = this.game.board;
+        // board.deselectCells();
+      },
+      pawnSelected(pawn) {
+        const self = this;
+        self.selectCell(pawn.row, pawn.column);
 
       },
       selectCell(row, column) {

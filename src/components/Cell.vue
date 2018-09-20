@@ -3,7 +3,7 @@
     :style="{flex: size}"
     :class="getClasses"
     class="cell"
-    @click="pawnSelected">
+    @click="cellSelected">
     <template v-if="cell.pawn">
       <grid-pawn 
         :pawn="cell.pawn"
@@ -57,14 +57,20 @@ export default {
       if (this.cell.isSelected) {
         classes.push("color-selection");
       }
+      if (this.cell.isInRange) {
+        classes.push("color-in-range");
+      }
       return classes;
     }
   },
   methods: {
     pawnSelected() {
       if (this.cell.pawn) {
-        this.$emit("pawnSelected", this.cell.pawn, 4);
+        this.$emit("pawnSelected", this.cell.pawn, this.cell.pawn.range);
       }
+    },
+    cellSelected() {
+        this.$emit("cellSelected");
     }
   }
 };
@@ -96,6 +102,9 @@ export default {
   }
   &.color-selection { 
     background-color: red;
+  }
+  &.color-in-range { 
+    border: 1px white solid;
   }
 }
 </style>

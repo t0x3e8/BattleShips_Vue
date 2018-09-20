@@ -8,6 +8,7 @@ export default class Board {
 		this.boardMap = options.boardMap || Defaults.BOARD_FIELDS_MAP;
 		this.grid = this.createGrid();
 		this.selectedCell = false;
+		this.cellsInRange = [];
 	}
 
 	createGrid() {
@@ -38,12 +39,70 @@ export default class Board {
 		const self = this;
 		const newSelectedCell = this.grid[row][column];
 
+		self.deselectCells();
+
 		if (self.selectedCell) {
 			self.selectedCell.isSelected = false;
 			self.selectedCell = false;
 		}
 		if (newSelectedCell) {
 			newSelectedCell.isSelected = true;
-			self.selectedCell = newSelectedCell;}
+			self.selectedCell = newSelectedCell;
+
+			self.selectCells(self.selectedCell.pawn);
+		}
+	}
+
+	deselectCells() {
+		const self = this;
+		
+		self.cellsInRange.forEach(cell => {
+			cell.isInRange = false;
+		});
+		self.cellsInRange = [];
+
+	}
+
+	selectCells(pawn) {
+		const self = this;
+
+		self.cellsInRange = self.getPawnRange(pawn);
+		self.cellsInRange.forEach(cell => {
+			cell.isInRange = true;
+		});
+	}
+
+	getPawnRange(pawn) {
+    const pawnRange = pawn.range;
+
+		const cellsInRange = [];
+		// let pawnInField = null;
+		const colMin = pawn.column - pawnRange;
+    let col = colMin;
+    const colMax = pawn.column + pawnRange;
+    let row = pawn.row - pawnRange;
+    const rowMax = pawn.row + pawnRange;
+    const self = this;
+
+    // each field within the square range is tested, if: 
+    // - the field has no pawns in it, mark the field as in range,
+    // - the field has a pawn, but the pawn is opponent's pawn, mark the field as in range, 
+    for (row; row <= rowMax; row++) {
+        if (typeof self.grid[row] !== 'undefined') {
+            for (col; col <= colMax; col++) {
+                if (typeof self.grid[row][col] !== 'undefined') {
+										// pawnInField = self.grid[row][col].pawn;
+										// todo replace with players
+                    // if (!pawnInField || pawnInField.getPlayer() &&
+                    //     pawnInField.getPlayer().getPlayerId() !== pawn.getPlayer().getPlayerId()) {
+										cellsInRange.push(self.grid[row][col]);
+                    //}
+                }
+            }
+            col = colMin;
+        }
+    }
+
+    return cellsInRange;
 	}
 }
